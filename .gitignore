@@ -1,0 +1,5 @@
+temp/
+.settings/
+.buildpath
+.project
+.git
