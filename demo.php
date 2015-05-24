@@ -37,8 +37,8 @@ use form\php\Form;
 			$form->setRequired("age",false);
 			$form->addField("alternant","Alternance ?");
 			$form->addField("commentaire","Commentaire");
-			$form->loadValuesFromIndex("id","1");
-			//$form->isUpdateForm("id","22");
+			//$form->loadValuesFromIndex("id","1");
+			$form->isUpdateForm("id","1");
 			$form->show();
 			?>
 		</div>

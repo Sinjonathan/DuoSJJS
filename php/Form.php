@@ -436,15 +436,16 @@ class Form {
 	}
 	
 	public function isUpdateForm($id_column, $id_value) {
-		$this->mode = "update";
 		
+		$this->loadValuesFromIndex($id_column, $id_value);
+		$this->mode = "update";
+	
 		// On regarde si la clé primaire est déjà affiché
 		$field = $this->getField($id_column);
 		// Si ce n'est pas la cas, on l'ajoute à la liste
 		if($field === null ) {
 			$this->addField($id_column,"ID for update", $id_value);
 		}
-	
 	}
 
 	public function __sleep() {
