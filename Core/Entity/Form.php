@@ -1,14 +1,13 @@
 <?php
 
-namespace FormBundle\Entity;
+namespace Core\Entity;
 
-use FormBundle\Entity\Field;
-use FormBundle\Driver\FormDriver;
-use FormBundle\Driver\FormDriverMYSQL;
-use FormBundle\Driver\FormDriverPGSQL;
-use FormBundle\Exception\FieldAlreadyDefinedException;
-use FormBundle\Resources\Tools;
-use FormBundle\Exception\FormBundle\Exception;
+use Core\Entity\Field;
+use Core\Driver\FormDriver;
+use Core\Driver\FormDriverMYSQL;
+use Core\Driver\FormDriverPGSQL;
+use Core\Exception\FieldAlreadyDefinedException;
+use Core\Resources\Tools;
 
 /**
  * Classe principale du plugin "Formulaire".
@@ -461,7 +460,7 @@ class Form {
 	}
 	
 	public function check() {
-		file_put_contents("./Subject44/FormBundle/temp/".$this->id, serialize($this));
+		file_put_contents("./Core/temp/".$this->id, serialize($this));
 	}
 	
 }

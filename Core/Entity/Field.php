@@ -1,6 +1,6 @@
 <?php
 
-namespace FormBundle\Entity;
+namespace Core\Entity;
 
 /**
  * Classe "Field".

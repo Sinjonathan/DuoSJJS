@@ -1,6 +1,6 @@
 <?php
 
-namespace FormBundle\Resources;
+namespace Core\Resources;
 
 class Tools {
 	function print_var_name($var) {

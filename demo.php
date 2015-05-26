@@ -2,10 +2,10 @@
 
 // Lancement de l'autoloader
 require_once("Loader/SplClassLoader.php");
-$loader = new SplClassLoader('FormBundle', __DIR__.'/Subject44');
+$loader = new SplClassLoader('Core', __DIR__);
 $loader->register();
 
-use FormBundle\Entity\Form;
+use Core\Entity\Form;
 ?>
 
 <!DOCTYPE html>
@@ -21,12 +21,12 @@ use FormBundle\Entity\Form;
 		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<!-- jQuery UI -->
-		<script src="./Subject44/FormBundle/Resources/lib/jquery-ui/jquery-ui.min.js"></script>
-		<link rel="stylesheet" href="./Subject44/FormBundle/Resources/lib/jquery-ui/jquery-ui.min.css">
-		<link rel="stylesheet" href="./Subject44/FormBundle/Resources/lib/jquery-ui/jquery-ui.structure.min.css">
-		<link rel="stylesheet" href="./Subject44/FormBundle/Resources/lib/jquery-ui/jquery-ui.theme.min.css">
+		<script src="./Core/Resources/lib/jquery-ui/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="./Core/Resources/lib/jquery-ui/jquery-ui.min.css">
+		<link rel="stylesheet" href="./Core/Resources/lib/jquery-ui/jquery-ui.structure.min.css">
+		<link rel="stylesheet" href="./Core/Resources/lib/jquery-ui/jquery-ui.theme.min.css">
 		<!-- formulaire -->
-		<script src="./Subject44/FormBundle/Script/form.js"></script>
+		<script src="./Core/Script/form.js"></script>
     </head>
 	<body>
 		<div id="test" class="col-md-offset-3 col-md-6 col-sm-10">

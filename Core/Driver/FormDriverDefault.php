@@ -1,6 +1,6 @@
 <?php
 
-namespace FormBundle\Driver;
+namespace Core\Driver;
 
 class FormDriverDefault extends FormDriverPGSQL {
 	

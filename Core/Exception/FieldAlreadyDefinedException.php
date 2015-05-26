@@ -1,6 +1,6 @@
 <?php
 
-namespace FormBundle\Exception;
+namespace Core\Exception;
 
 class FieldAlreadyDefinedException extends \Exception {
 	

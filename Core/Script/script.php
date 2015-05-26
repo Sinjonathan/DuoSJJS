@@ -1,6 +1,6 @@
 <?php
 
-namespace FormBundle\Script;
+namespace Core\Script;
 
 include '../Entity/Form.php';
 include '../Entity/Field.php';
