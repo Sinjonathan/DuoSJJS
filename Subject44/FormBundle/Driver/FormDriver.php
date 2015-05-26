@@ -1,6 +1,6 @@
 <?php
 
-namespace form\php;
+namespace FormBundle\Driver;
 
 /**
  * Driver de base de données (MySQL, pgSQL,...)

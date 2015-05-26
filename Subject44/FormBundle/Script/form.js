@@ -28,13 +28,13 @@ $(function() {
 
 		/*$.ajax({
 			  type: 'POST',
-			  url: "./php/script.php",
+			  url: "./Subject44/FormBundle/Script/script.php",
 			  data: {'formID': formID, 'param': param, 'values': values, 'mode': mode,
 			  success: function() {alert("toto");},
 			  async:false
 		});*/
 		
-		$.post("./php/script.php", {'formID': formID, 'param': param, 'values': values, 'mode': mode}, function(data) {alert(data);},"text");
+		$.post("./Subject44/FormBundle/Script/script.php", {'formID': formID, 'param': param, 'values': values, 'mode': mode}, function(data) {alert(data);},"text");
 		/*
 		if(status && mode == 'insert') {
          	$('#alert-success-insert').show();

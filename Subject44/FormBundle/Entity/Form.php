@@ -1,21 +1,14 @@
 <?php
 
-namespace form\php;
+namespace FormBundle\Entity;
 
-require 'Field.php';
-use form\php\Field;
-
-require 'FormDriver.php';
-use form\php\FormDriver;
-
-require 'FormDriverPGSQL.php';
-use form\php\FormDriverPGSQL;
-
-require 'FormDriverMYSQL.php';
-use form\php\FormDriverMYSQL;
-use form\php\exception\PDOConnectionException;
-
-require 'tools.php';
+use FormBundle\Entity\Field;
+use FormBundle\Driver\FormDriver;
+use FormBundle\Driver\FormDriverMYSQL;
+use FormBundle\Driver\FormDriverPGSQL;
+use FormBundle\Exception\FieldAlreadyDefinedException;
+use FormBundle\Resources\Tools;
+use FormBundle\Exception\FormBundle\Exception;
 
 /**
  * Classe principale du plugin "Formulaire".
@@ -177,7 +170,7 @@ class Form {
 			$this->connect->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		}catch (\PDOException $e) {
 			$this->connect = null;
-			print_exception("PDOException", $e->getMessage());
+			$t = new Tools; $t->print_exception("PDOException", $e->getMessage());
 		}
 	}
 	
@@ -217,7 +210,7 @@ class Form {
 		
 		// S'il existe, on crache une erreur
 		if ($field instanceof Field) {
-			throw new \Exception("Error exception : the field '".$name."' already defined !");
+			throw new FieldAlreadyDefinedException($field->name);
 		// Sinon on le crée
 		}else{
 			// Si le champs est une clé primaire
@@ -468,7 +461,7 @@ class Form {
 	}
 	
 	public function check() {
-		file_put_contents("./temp/".$this->id, serialize($this));
+		file_put_contents("./Subject44/FormBundle/temp/".$this->id, serialize($this));
 	}
 	
 }
