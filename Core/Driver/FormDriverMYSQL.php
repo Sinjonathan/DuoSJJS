@@ -14,7 +14,7 @@ class FormDriverMYSQL extends FormDriver {
 	 * @see \form\php\FormDriver::getFieldType()
 	 */
 	public function getFieldType($name) {
-		$request['request'] = 'SELECT column_name, data_type FROM information_schema.columns WHERE table_name=:table AND column_name=:name;';
+		$request['request'] = 'SELECT column_name, column_type FROM information_schema.columns WHERE table_name=:table AND column_name=:name;';
 		$request['parameters'] = array("table" => strtolower($this->getForm()->table), "name" => strtolower($name));
 		return $request;
 	}

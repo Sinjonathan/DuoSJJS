@@ -2,11 +2,11 @@
 
 namespace Core\Exception;
 
-class LoadValuesInEmptyFieldListException extends \Exception {
+class FieldUnknownInDatabaseException extends \Exception {
 	
-	public function __construct($message = null, $code = 0, Exception $previous = null) {
+	public function __construct($fieldname, $message = null, $code = 0, Exception $previous = null) {
 		if (is_null ( $message )) {
-			$message = "No fields founds, try to add fields before load values";
+			$message = "Field [" . $fieldname . "] not defined in database";
 		}
 		
 		parent::__construct ( $message, $code, $previous );

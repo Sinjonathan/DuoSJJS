@@ -32,8 +32,9 @@ use Core\Entity\Form;
 		<div id="test" class="col-md-offset-3 col-md-6 col-sm-10">
 			<h1 style="text-align: center;">Formulaire de test</h1><br />
 			<?php
-			$form = new Form();
+			/*$form = new Form();
 			$form->init("localhost","pgsql","formulaire","etudiant","jonathan","admin");
+			
 			$form->addField("prenom","Prénom");
 			$form->addField("nom","Nom");
 			$form->addField("datenaiss","Date de naissance");
@@ -43,7 +44,15 @@ use Core\Entity\Form;
 			$form->addField("alternant","Alternance ?");
 			$form->addField("commentaire","Commentaire");
 			//$form->loadValuesFromIndex("id","1");
-			$form->isUpdateForm("id","1");
+			//$form->isUpdateForm("id","22");
+			$form->show();*/
+			
+			$form = new Form();
+			$form->init("localhost","pgsql","formulaire","note","jonathan","admin");
+			$form->addIndexedField("etudiant","NIP Etudiant","etudiant","nip","prenom");
+			$form->addIndexedField("matiere","ID Matiere","matiere","id_m","libelle");
+			$form->addField("note","Note");
+			//$form->setAllRequired(false);
 			$form->show();
 			?>
 		</div>

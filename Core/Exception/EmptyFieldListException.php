@@ -2,11 +2,11 @@
 
 namespace Core\Exception;
 
-class FieldUndefinedException extends \Exception {
+class EmptyFieldListException extends \Exception {
 	
-	public function __construct($fieldname, $message = null, $code = 0, Exception $previous = null) {
+	public function __construct($func, $message = null, $code = 0, Exception $previous = null) {
 		if (is_null ( $message )) {
-			$message = "Field [" . $fieldname . "] not defined";
+			$message = "No fields founds, try to add fields before [" . $func . ']';
 		}
 		
 		parent::__construct ( $message, $code, $previous );
