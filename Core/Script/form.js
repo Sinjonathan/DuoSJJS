@@ -4,40 +4,40 @@ $(function() {
 		showOtherMonths: true,
 		selectOtherMonths: true,
     });
-	
-	function validateForm(){
-		
-		var mode = $('#request').val();
-		var formID = $('#formID').val();
-		var pluginPath = $('#pluginPath').val();
-		var param = [];
-		var values = [];
-		var cpt = 0;
-		//var status = true;
-
-		$('#'+formID+ ' .field' ).each(function() {
-			if (!($(this).attr('type') == 'radio' && !$(this).is(':checked'))) {
-				param[cpt] = $(this).attr('id');
-				values[cpt] = $(this).val();
-				cpt++;
-			}
-		});
-
-		/*$.ajax({
-			  type: 'POST',
-			  url: pluginPath + "/Core/Script/script.php",
-			  data: {'formID': formID, 'param': param, 'values': values, 'mode': mode,
-			  success: function() {alert("toto");},
-			  async:false
-		});*/
-		
-		$.post(pluginPath + "/Core/Script/script.php", {'formID': formID, 'param': param, 'values': values, 'mode': mode}, function(data) {alert(data);},"text");
-		/*
-		if(status && mode == 'insert') {
-         	$('#alert-success-insert').show();
-       	}*/
-	}
 });
+
+function validateForm(){
+	
+	var mode = $('#request').val();
+	var formID = $('#formID').val();
+	var pluginPath = $('#pluginPath').val();
+	var param = [];
+	var values = [];
+	var cpt = 0;
+	//var status = true;
+
+	$('#'+formID+ ' .field' ).each(function() {
+		if (!($(this).attr('type') == 'radio' && !$(this).is(':checked'))) {
+			param[cpt] = $(this).attr('id');
+			values[cpt] = $(this).val();
+			cpt++;
+		}
+	});
+
+	/*$.ajax({
+		  type: 'POST',
+		  url: pluginPath + "/Core/Script/script.php",
+		  data: {'formID': formID, 'param': param, 'values': values, 'mode': mode,
+		  success: function() {alert("toto");},
+		  async:false
+	});*/
+	
+	$.post(pluginPath + "/Core/Script/script.php", {'formID': formID, 'param': param, 'values': values, 'mode': mode}, function(data) {alert(data);},"text");
+	/*
+	if(status && mode == 'insert') {
+     	$('#alert-success-insert').show();
+   	}*/
+}
 
 (function(factory) {
 	if ( typeof define === "function" && define.amd ) {
