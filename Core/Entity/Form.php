@@ -55,9 +55,12 @@ class Form {
 	public $labelSize = array();
 	public $inputSize = array();
 	
+	// Attribut du plugin
+	public $pluginPath;
+	
 	// Constructeur
-	function __construct() {
-		
+	function __construct($pluginPath) {
+
 		$this->url 		= Form::$BDD_URL;
 		$this->driver 	= Form::$BDD_DRIVER;
 		$this->database = Form::$BDD_DATABASE;
@@ -68,6 +71,8 @@ class Form {
 		$this->mode		= Form::$MODE;
 		
 		$this->fieldList = new \ArrayObject();
+		
+		$this->pluginPath = $pluginPath;
 	}
 	
 	/**
@@ -81,7 +86,7 @@ class Form {
 	 * @return Form
 	 */
 	public function init($url = "", $driver = "", $database = "",  $table, $login = "", $password = "") {
-	
+
 		if (!empty($url)) 		$this->url = $url;
 		if (!empty($driver)) 	$this->driver = $driver;
 		if (!empty($database)) 	$this->database = $database;
@@ -376,6 +381,7 @@ class Form {
 		$html .= '<button type="submit" class="btn btn-primary" name="request" id="request" value="'.$this->mode.'">Envoyer</button></div>';
 		$html .= '</div></div>';
 		$html .= '<input type="hidden" id="formID" name="formID" value="'.$this->id.'">';
+		$html .= '<input type="hidden" id="pluginPath" name="pluginPath" value="'.$this->pluginPath.'">';
 		$html .= '</form>';
 		print($html);
 		
@@ -477,7 +483,12 @@ class Form {
 		
 		$request = "SELECT ".$fields." FROM ".$tables." WHERE $id_column = '".$id_value."';";
 
-		$req = $this->connect->query($request);
+		try {
+			$req = $this->connect->query($request);
+		}catch (\PDOException $e){
+			echo $e->getMessage();
+			throw new \PDOException($e->getMessage());	
+		}
 		
 		$row = $req->fetch();
 		
@@ -519,7 +530,6 @@ class Form {
 	}
 	
 	public function check() {
-		file_put_contents("./Core/temp/".$this->id, serialize($this));
+		file_put_contents($this->pluginPath . "/Core/temp/".$this->id, serialize($this));
 	}
-	
 }

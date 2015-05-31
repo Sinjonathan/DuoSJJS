@@ -13,6 +13,7 @@ $(function() {
 		
 		var mode = $('#request').val();
 		var formID = $('#formID').val();
+		var pluginPath = $('#pluginPath').val();
 		var param = [];
 		var values = [];
 		var cpt = 0;
@@ -28,13 +29,13 @@ $(function() {
 
 		/*$.ajax({
 			  type: 'POST',
-			  url: "./Core/Script/script.php",
+			  url: pluginPath + "/Core/Script/script.php",
 			  data: {'formID': formID, 'param': param, 'values': values, 'mode': mode,
 			  success: function() {alert("toto");},
 			  async:false
 		});*/
 		
-		$.post("./Core/Script/script.php", {'formID': formID, 'param': param, 'values': values, 'mode': mode}, function(data) {alert(data);},"text");
+		$.post(pluginPath + "/Core/Script/script.php", {'formID': formID, 'param': param, 'values': values, 'mode': mode}, function(data) {alert(data);},"text");
 		/*
 		if(status && mode == 'insert') {
          	$('#alert-success-insert').show();
