@@ -2,11 +2,16 @@
 
 use Core\Exception\PluginPathException;
 
-// Lancement de l'autoloader
+// Launch autoloader
 require_once("Loader/SplClassLoader.php");
 $loader = new SplClassLoader('Core', __DIR__);
 $loader->register();
 
+/**
+ * Initialize the plugin information
+ * @param String $pluginPath	: The location of the plugin in the project 
+ * @throws PluginPathException	: Exception when pluginPath is not specified
+ */
 function loadFormMakerPluginInfo($pluginPath) {
 	
 	if (!empty($pluginPath)) {

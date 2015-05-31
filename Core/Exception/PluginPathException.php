@@ -2,6 +2,11 @@
 
 namespace Core\Exception;
 
+/**
+ * PluginPathException
+ * @author Sébastien JOLY
+ * @author Jonathan SANTONI
+ */
 class PluginPathException extends \Exception {
 	
 	public function __construct($location, $message = null, $code = 0, Exception $previous = null) {

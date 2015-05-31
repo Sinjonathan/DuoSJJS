@@ -2,6 +2,11 @@
 
 namespace Core\Exception;
 
+/**
+ * FieldStatesCompatibilityException
+ * @author Sébastien JOLY
+ * @author Jonathan SANTONI
+ */
 class FieldStatesCompatibilityException extends \Exception {
 	
 	public function __construct($field, $expectState, $invalidCondition, $message = null, $code = 0, Exception $previous = null) {

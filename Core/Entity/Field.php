@@ -3,13 +3,12 @@
 namespace Core\Entity;
 
 /**
- * Classe "Field".
+ * Class "Field", the representation of a form field
  * @author Sébastien JOLY
  * @author Jonathan SANTONI
  */
 class Field {
 	
-	// Attributs du champs
 	public $form 	= null;
 	public $table 	= null;
 	public $label 	= "";
@@ -26,7 +25,15 @@ class Field {
 	public $hidden = false;
 	public $disabled = false;
 	
-	// Constructeur
+	/**
+	 * The constructor
+	 * @param Form $form			: The form where is the field
+	 * @param String $table			: The table where the field representation is located
+	 * @param String $name			: The field name in database
+	 * @param String $label			: The field label
+	 * @param String $type			: The field type
+	 * @param bolean $primaryKey	: True if the field is a primary key
+	 */
 	function __construct($form, $table, $name, $label, $type, $primaryKey) {
 		$this->form = $form;
 		$this->table = $table;
@@ -37,8 +44,9 @@ class Field {
 	}
 	
 	/**
-	 * Retourne une représentation HTML du champs
-	 */ 
+	 * Give a HTML representation of the field
+	 * @return string	: The html code of the field 
+	 */
 	public function showField() {
 		
 		$html = '<div class="form-group "';
@@ -58,7 +66,8 @@ class Field {
 	}
 	
 	/**
-	 * Retourne le code HTML de l'input adéquat selon le type du champs
+	 * Give a HTML input according to the type of the field
+	 * @return string	: The html code of the input
 	 */
 	public function showInput() {
 	
@@ -104,24 +113,6 @@ class Field {
 		}elseif (stristr($this->type,"int")) {
 			$html = '<input type="number" class="form-control field" id="'.$this->name.'" value="'.$this->defaultValue.'" '.$this->showOptions().'/>';
 		
-		// ENUM
-		/*
-		}elseif (stristr($this->type,"enum")) {
-			$options = str_replace('enum(','',$this->type);
-			$options = str_replace(')','',$options);
-			$options = str_replace('\'','',$options);
-			$options = explode(',',$options);
-			$html = '<select id="'.$this->name.'" class="form-control field"'.$this->showOptions().'>';
-			$html .= '<option value=null>-- Choisir --</option>';
-			foreach($options as $option) {
-				if ($option == $this->defaultValue) {
-					$html .= '<option selected>'.$option.'</option>';
-				}else{
-					$html .= '<option>'.$option.'</option>';
-				}
-			}
-			$html .= '</select>';
-		*/
 		// AUTRE
 		}else{
 			$html = '<input type="text" class="form-control field" id="'.$this->name.'" placeholder="Saisir '.lcfirst($this->label).'" value="'.$this->defaultValue.'" '.$this->showOptions().'>';
@@ -130,6 +121,10 @@ class Field {
 		return $html;
 	}
 	
+	/**
+	 * Add option to the field
+	 * @return string	: A String with the field options
+	 */
 	public function showOptions() {
 		$options = "";
 		

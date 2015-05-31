@@ -2,6 +2,11 @@
 
 namespace Core\Exception;
 
+/**
+ * EmptyFieldListException
+ * @author Sébastien JOLY
+ * @author Jonathan SANTONI
+ */
 class EmptyFieldListException extends \Exception {
 	
 	public function __construct($func, $message = null, $code = 0, Exception $previous = null) {

@@ -13,17 +13,16 @@ use Core\Exception\FieldUnknownInDatabaseException;
 use Core\Exception\PluginPathException;
 
 /**
- * Classe principale du plugin "Formulaire".
+ * The representation of a form
  * @author Sébastien JOLY
  * @author Jonathan SANTONI
  */
 class Form {
 
-	// Langues disponibles
 	public static $FRANCAIS 		= "fr";
 	public static $ENGLISH 			= "en";
 	
-	// Paramètres par défaut
+	// Default parameters
 	protected static $BDD_URL 		= "127.0.0.1";
 	protected static $BDD_LOGIN 	= "root";
 	protected static $BDD_PASSWORD 	= "";
@@ -33,7 +32,7 @@ class Form {
 	protected static $ENCODING 		= "UTF-8";
 	protected static $MODE			= "insert";
 	
-	// Paramètres de la base de données
+	// Database parameters
 	public $url 		= "";
 	public $login 		= "";
 	public $password 	= "";
@@ -43,23 +42,24 @@ class Form {
 	public $language 	= "";
 	public $encoding 	= "";
 	public $mode		= "";
-
-	// Attributs privés
+	
+	// Form attributes
+	public $id;
+	public $fieldList;
+	public $pluginPath;
+	public $labelSize = array();
+	public $inputSize = array();
+	
 	private $connect 	= null;
 	private $concreteDriver = null;
 	private $request	= "";
 	private $error 		= "";
 	
-	// Attributs de la classe "Form"
-	public $id;
-	public $fieldList;
-	public $labelSize = array();
-	public $inputSize = array();
-	
-	// Attribut du plugin
-	public $pluginPath;
-	
-	// Constructeur
+	/**
+	 * Constructor of a Form
+	 * @param String $pluginPath	: The location of the plugin in the project 
+	 * @throws PluginPathException	: Exception when pluginPath is not specified
+	 */
 	function __construct($pluginPath) {
 
 		$this->url 		= Form::$BDD_URL;
@@ -79,16 +79,16 @@ class Form {
 			throw new PluginPathException('__construct');
 		}
 	}
-	
+		
 	/**
-	 * Initialisation de la connexion à la base de données
-	 * @param $url			URL du serveur de la base de données
-	 * @param $driver		Type de la base de données (MySQL, PostgreSQL, ...)
-	 * @param $database		Nom de la base de données
-	 * @param $table		Nom de la table
-	 * @param $login		Login de l'utilisateur
-	 * @param $password		Password de l'utilisateur
-	 * @return Form
+	 * Initializing the connection to the database
+	 * @param string $url			: URL of the database server
+	 * @param string $driver		: Database type (MySQL , PostgreSQL , ...)
+	 * @param string $database		: Database name
+	 * @param unknown $table		: Database table
+	 * @param string $login			: User login in database 
+	 * @param string $password		: User password in database
+	 * @return Form					: The initialized form
 	 */
 	public function init($url = "", $driver = "", $database = "",  $table, $login = "", $password = "") {
 
@@ -109,6 +109,9 @@ class Form {
 		return $this;
 	}
 	
+	/**
+	 * Initialize the boostrap parameters
+	 */
 	public function initGridSize() {
 		$this->labelSize['col-xs-'] = 4;
 		$this->labelSize['col-sm-'] = 4;
@@ -120,6 +123,11 @@ class Form {
 		$this->inputSize['col-lg-'] = 8;
 	}
 	
+	/**
+	 * Setter for set all boostrap parameters
+	 * @param integer $label	: The label bootstrap size
+	 * @param integer $input	: The input boostrap size
+	 */
 	public function setAllGridColumn($label, $input) {
 		foreach ($this->labelSize as $key => $value) {
 			$this->labelSize[$key] = $label;
@@ -130,26 +138,50 @@ class Form {
 		}
 	}
 	
+	/**
+	 * Setter for boostrap Xs parameters
+	 * @param integer $label	: The label bootstrap size
+	 * @param integer $input	: The input boostrap size
+	 */
 	public function setGridColumnXs($label, $input) {
 		$this->labelSize['col-xs-'] = $label;
 		$this->inputSize['col-xs-'] = $input;
 	}
 	
+	/**
+	 * Setter for boostrap Sm parameters
+	 * @param integer $label	: The label bootstrap size
+	 * @param integer $input	: The input boostrap size
+	 */
 	public function setGridColumnSm($label, $input) {
 		$this->labelSize['col-sm-'] = $label;
 		$this->inputSize['col-sm-'] = $input;
 	}
 	
+	/**
+	 * Setter for boostrap Md parameters
+	 * @param integer $label	: The label bootstrap size
+	 * @param integer $input	: The input boostrap size
+	 */
 	public function setGridColumnMd($label, $input) {
 		$this->labelSize['col-md-'] = $label;
 		$this->inputSize['col-md-'] = $input;
 	}
 	
+	/**
+	 * Setter for boostrap Lg parameters
+	 * @param integer $label	: The label bootstrap size
+	 * @param integer $input	: The input boostrap size
+	 */
 	public function setGridColumnLg($label, $input) {
 		$this->labelSize['col-Lg-'] = $label;
 		$this->inputSize['col-Lg-'] = $input;
 	}
 	
+	/**
+	 * Get the label boostrap size
+	 * @return string	: The labelSize
+	 */
 	public function getLabelSize() {
 		$labelsPrint = " ";
 	
@@ -160,6 +192,10 @@ class Form {
 		return $labelsPrint;
 	}
 	
+	/**
+	 * Get the input boostrap size
+	 * @return string	: The inputSize
+	 */
 	public function getInputSize() {
 		$inputsPrint = " ";
 	
@@ -170,10 +206,9 @@ class Form {
 		return $inputsPrint;
 	}
 	
-	
 	/**
-	 * Connexion à la base de données via l'outil PDO
-	 * @return PDO
+	 * Connecting to the database via the PDO tool
+	 * @throws \PDOException	: The catched PDOException
 	 */
 	private function connect() {
 		try {
@@ -186,17 +221,17 @@ class Form {
 	}
 	
 	/**
-	 * Retourne la liste des champs du formulaire
-	 * @return ArrayObject
+	 * Get a list of form fields
+	 * @return \ArrayObject 	: The list of the form field
 	 */
 	private function getFieldList() {
 		return $this->fieldList;
 	}
 	
 	/**
-	 * Retourne le champs dont le nom est passé en paramètre
-	 * @param $name 	Nom du champs
-	 * @return Field
+	 * Returns the field whose name is passed as a parameter
+	 * @param String $name		: The name of the field in the database
+	 * @return \ArrayObject		: A list with the field or null if is not found
 	 */
 	public function getField($name) {
 		foreach ($this->fieldList as $field)
@@ -210,6 +245,16 @@ class Form {
 	 * @param $name		Nom du champs dans la base de données
 	 * @param $label	Libellé du champs
 	 */
+	
+	/**
+	 * Add a field in the form
+	 * @param String $name						: The name of the field in the database
+	 * @param String $label						: The label of the field
+	 * @param string $defaultValue				: The default value of the field
+	 * @throws FieldUnknownInDatabaseException 	: Exception when the field is not in the database
+	 * @throws FieldAlreadyDefinedException		: Exception when the field is already defined in the form
+	 * @return Field							: The field added
+	 */
 	public function addField($name, $label, $defaultValue = null) {
 		
 		$this->connect();
@@ -220,15 +265,14 @@ class Form {
 			throw new FieldUnknownInDatabaseException($name);
 		}
 		
-		// On regarde s'il existe déjà un champs qui porte ce nom
+		// If the field already exist with this name, make an exception
 		$field = $this->getField($name);
-		
-		// S'il existe, on crache une erreur
 		if ($field instanceof Field) {
 			throw new FieldAlreadyDefinedException($field->name);
-		// Sinon on le crée
+		
+		// Else create it
 		}else{
-			// Si le champs est une clé primaire
+			// If is a primary key 
 			if ($this->concreteDriver->isIndex($name)) {
 				$field = new Field($this, $this->table, $name, $label, $response[0]['column_type'], true);
 				$field->required = true;
@@ -237,7 +281,6 @@ class Form {
 					$field->disabled = true;
 				}
 				
-				// Si la clé est autogénérée on ne l'affiche pas
 				if ($this->concreteDriver->isAutoGenerated($name)) {
 					$field->autogenerated = true;
 					$field->hidden = true;
@@ -253,12 +296,15 @@ class Form {
 	}
 	
 	/**
-	 * Ajoute un champs au formulaire dont les valeurs sont indexés à la manière d'une clé étrangère
-	 * @param $name 				Le nom du champs de la BDD à afficher
-	 * @param $label 				Le libellé du champs
-	 * @param $ref_table			Le nom de la table dans laquelle se trouve la référence
-	 * @param $ref_column_index		Les index sauvegardés dans $column de la table courante
-	 * @param $ref_column_values	Les valeurs correspondantes aux index, à afficher dans la liste déroulante
+	 * Add fields to the form whose values ​​are indexed in the manner of a foreign key
+	 * @param String $name					: The name of the field in the database
+	 * @param String $label					: The label of the field
+	 * @param String $ref_table				: The name of the table in which the reference is
+	 * @param String $ref_column_index		: The indexes stored in the column in the current table
+	 * @param String $ref_column_values		: The corresponding values ​​in the index to display in the drop-down list
+	 * @throws \PDOException				: PDOException
+	 * @throws FieldAlreadyDefinedException	: Exception when the field is already defined
+	 * @return Field						: The indexed field
 	 */
 	public function addIndexedField($name, $label, $ref_table, $ref_column_index, $ref_column_values) {
 	
@@ -275,13 +321,12 @@ class Form {
 			throw new \PDOException($e->getMessage());
 		}
 	
-		// On regarde s'il existe déjà un champs qui porte ce nom
+		// If the field already exist with this name, make an exception
 		$field = $this->getField($name);
-	
-		// S'il existe, on crache une erreur
 		if ($field instanceof Field) {
 			throw new FieldAlreadyDefinedException($field->name);
-			// Sinon on le crée
+		
+		// Else created it
 		}else{
 			$field = new Field($this, $this->table, $name, $label, 'select', false);
 			$field->indexed = true;
@@ -292,29 +337,29 @@ class Form {
 		}
 	
 		return $field;
-	
 	}
 	
 	/**
-	 * Retourne les informations concernant la base de données
+	 * Returns information about the database
 	 */
 	public function printInfoBDD() {
 		print("__________Connexion__________<br/><br/>");
 		print("URL : ".$this->url."<br/>");
-		print("Type de base : ".$this->driver."<br/>");
-		print("Langue : ".$this->language."<br/>");
+		print("Database Type : ".$this->driver."<br/>");
+		print("Language : ".$this->language."<br/>");
 		print("Encodage : ".$this->encoding."<br/>");
-		print("Nom de la base : ".$this->database."<br/>");
-		print("Nom de la table : ".$this->table."<br/>");
+		print("Database name : ".$this->database."<br/>");
+		print("Table name : ".$this->table."<br/>");
 		print("Login : ".$this->login."<br/>");
 		print("Password : ".$this->password."<br/>");
 		print("_____________________________");
 	}
 	
 	/**
-	 * 
-	 * @param unknown $request
-	 * @param unknown $parameters
+	 * Prepare and execute a request
+	 * @param array $request		:  
+	 * @param array $parameters		: 
+	 * @return \ArrayObject			: The result of the request
 	 */
 	public function prepareExecute($request, $parameters) {
 		try {
@@ -340,35 +385,37 @@ class Form {
 	}
 	
 	/**
-	 * On va créer un driver selon le type de base de données
+	 * Initilize driver 
+	 * @throws DriverNotSupportedException	: Exception when a driver is unknown
 	 */
 	private function setConcreteDriver() {
 		if ($this->concreteDriver == null) {
 			switch ($this->driver) {
 				case "pgsql" :
-					$this->concreteDriver = new FormDriverPGSQL ();
+					$this->concreteDriver = new FormDriverPGSQL();
 					break;
 				case "mysql" :
-					$this->concreteDriver = new FormDriverMYSQL ();
+					$this->concreteDriver = new FormDriverMYSQL();
 					break;
 				default :
-					throw new DriverNotSupportedException ( $this->driver );
+					throw new DriverNotSupportedException( $this->driver );
 					break;
 			}
-			$this->concreteDriver->setForm ( $this );
+			$this->concreteDriver->setForm( $this );
 		}
 	}
 	
 	/**
-	 * On change la table courante
-	 * @param $table	Le nom de la nouvelle table
+	 * Setter of database table
+	 * @param String $table		: The table name
 	 */
 	public function setTable($table) {
 		$this->table = $table;
 	}
 	
 	/**
-	 * Retourne le formulaire au format HTML
+	 * Return the HTML form
+	 * @throws EmptyFieldListException	: Exception when try to access on a empty field list
 	 */
 	public function show() {
 		
@@ -393,6 +440,11 @@ class Form {
 		$this->check();
 	}
 	
+	/**
+	 * Insertion in database
+	 * @param array $values		: The values to insert
+	 * @return integer 			: The insertion status
+	 */
 	public function insert($values) {
 		
 		$request = "INSERT INTO " . $this->table . " (";
@@ -424,6 +476,11 @@ class Form {
 		return $this->connect->exec($request);
 	}
 
+	/**
+	 * Update in database
+	 * @param array $values		: The values to insert
+	 * @return integer 			: The insertion status
+	 */
 	public function update($values) {
 
 		$request = "UPDATE " . $this->table . " SET ";
@@ -449,26 +506,52 @@ class Form {
 		return $this->connect->exec($request);
 	}
 	
+	/**
+	 * Setter for hidden option
+	 * @param String $fieldname		: The field name
+	 * @param boolean $bool			: The new hidden value
+	 */
 	public function setHidden($fieldname, $bool) {
 		$this->getField($fieldname)->hidden = $bool;
 		if ($bool) { $this->setRequired($fieldname,false); }
 	}
 	
+	/**
+	 * Setter for required option
+	 * @param String $fieldname		: The field name
+	 * @param boolean $bool			: The new required value
+	 */
 	public function setRequired($fieldname, $bool) {
 		if (!$this->getField($fieldname)->primaryKey) { $this->getField($fieldname)->required = $bool; }
 		if ($bool && $this->getField($fieldname)->defaultValue == null) { $this->getField($fieldname)->hidden = false; }
 	}
 	
+	/**
+	 * Setter for required all field
+	 * @param boolean $bool			: The new required value
+	 */
 	public function setAllRequired($bool) {
 		foreach ($this->fieldList as $field) {
 			$this->setRequired($field->name, $bool);
 		}
 	}
 	
+	/**
+	 * Setter for disabled option
+	 * @param String $fieldname		: The field name
+	 * @param boolean $bool			: The new disabled value
+	 */
 	public function setDisabled($fieldname, $bool) {
 		$this->getField($fieldname)->disabled = $bool;
 	}
 	
+	/**
+	 * Load value from a given index
+	 * @param String $id_column			: The name of the id column
+	 * @param Integer $id_value			: The value of the id column
+	 * @throws EmptyFieldListException	: Exception when try to access on a empty field list
+	 * @throws \PDOException			: PDOException
+	 */
 	public function loadValuesFromIndex($id_column, $id_value) {
 		$fields = "";
 		$tables = "";
@@ -502,6 +585,11 @@ class Form {
 		}	
 	}
 	
+	/**
+	 * Set the form to update mode and load value from an index
+	 * @param String $id_column			: The name of the id column
+	 * @param Integer $id_value			: The value of the id column
+	 */
 	public function isUpdateForm($id_column, $id_value) {
 		
 		$this->loadValuesFromIndex($id_column, $id_value);
@@ -515,6 +603,10 @@ class Form {
 		}
 	}
 
+	/**
+	 * Serialize the Form object
+	 * @return multitype:string
+	 */
 	public function __sleep() {
 		return array(
 			'url',
@@ -530,10 +622,16 @@ class Form {
 		);
 	}
 	
+	/**
+	 * Call after wakeup
+	 */
 	public function __wakeup() {
 		$this->connect();
 	}
 	
+	/**
+	 * Call when Form object is serialized
+	 */
 	public function check() {
 		file_put_contents($this->pluginPath . "/Core/temp/".$this->id, serialize($this));
 	}

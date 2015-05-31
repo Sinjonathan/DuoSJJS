@@ -2,6 +2,11 @@
 
 namespace Core\Exception;
 
+/**
+ * DriverNotSupportedException
+ * @author Sébastien JOLY
+ * @author Jonathan SANTONI
+ */
 class DriverNotSupportedException extends \Exception {
 	
 	public function __construct($driver, $message = null, $code = 0, Exception $previous = null) {

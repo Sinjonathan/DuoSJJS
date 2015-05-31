@@ -22,10 +22,10 @@ if (isset ( $_POST ['formID'] ) && isset ( $_POST ['mode'] )) {
 	if (file_exists ( $path )) {
 		$form = unserialize ( file_get_contents ( $path ) );
 		
-		// On vérifie la cohérence des données
+		// Check data coherance
 		for ($cpt = 0; $cpt < count($_POST['param']); $cpt++) {
 			$field = $form->getField($_POST['param'][$cpt]);
-			// Les champs 'date'
+	
 			if (stristr($field->type,"date")) {
 				
 				if( $_POST['values'][$cpt] == date('Y-m-d',strtotime($_POST['values'][$cpt])) )
@@ -37,7 +37,7 @@ if (isset ( $_POST ['formID'] ) && isset ( $_POST ['mode'] )) {
 				
 				$_POST['values'][$cpt] = date_format($dateTime,"Y-m-d");
 			}
-			// Les champs indexés
+			// Indexed field
 			if ($_POST['values'][$cpt] === 'select_value_null') {
 				if ($field->required) {
 					echo -1;
@@ -47,7 +47,7 @@ if (isset ( $_POST ['formID'] ) && isset ( $_POST ['mode'] )) {
 			}
 		}
 
-		// Insertion dans la table
+		// Insertion
 		if ($_POST ['mode'] == 'insert') { 
 			$status = $form->insert ( $_POST ['values'] );
 		} 

@@ -2,6 +2,11 @@
 
 namespace Core\Exception;
 
+/**
+ * FieldUnknownInDatabaseException
+ * @author Sébastien JOLY
+ * @author Jonathan SANTONI
+ */
 class FieldUnknownInDatabaseException extends \Exception {
 	
 	public function __construct($fieldname, $message = null, $code = 0, Exception $previous = null) {

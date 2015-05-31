@@ -2,6 +2,11 @@
 
 namespace Core\Exception;
 
+/**
+ * FormSetGridColumnException
+ * @author Sébastien JOLY
+ * @author Jonathan SANTONI
+ */
 class FormSetGridColumnException extends \Exception {
 	
 	public function __construct($incorrectSize, $message = null, $code = 0, Exception $previous = null) {
