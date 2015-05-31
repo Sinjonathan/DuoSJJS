@@ -14,7 +14,7 @@ function validateForm(){
 	var param = [];
 	var values = [];
 	var cpt = 0;
-	//var status = true;
+	//var status = false;
 
 	$('#'+formID+ ' .field' ).each(function() {
 		if (!($(this).attr('type') == 'radio' && !$(this).is(':checked'))) {
@@ -23,15 +23,15 @@ function validateForm(){
 			cpt++;
 		}
 	});
-
-	/*$.ajax({
+	/*
+	$.ajax({
 		  type: 'POST',
 		  url: pluginPath + "/Core/Script/script.php",
-		  data: {'formID': formID, 'param': param, 'values': values, 'mode': mode,
-		  success: function() {alert("toto");},
+		  data: {'formID': formID, 'param': param, 'values': values, 'mode': mode},
+		  success: function() {if(data == 1){status = true}},
 		  async:false
-	});*/
-	
+	});
+	*/
 	$.post(pluginPath + "/Core/Script/script.php", {'formID': formID, 'param': param, 'values': values, 'mode': mode}, function(data) {alert(data);},"text");
 	/*
 	if(status && mode == 'insert') {

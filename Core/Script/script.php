@@ -27,7 +27,15 @@ if (isset ( $_POST ['formID'] ) && isset ( $_POST ['mode'] )) {
 			$field = $form->getField($_POST['param'][$cpt]);
 			// Les champs 'date'
 			if (stristr($field->type,"date")) {
-				$_POST['values'][$cpt] = date_format(new \DateTime($_POST['values'][$cpt]),"Y-m-d");
+				
+				if( $_POST['values'][$cpt] == date('Y-m-d',strtotime($_POST['values'][$cpt])) )
+				{
+					$dateTime = \DateTime::createFromFormat('Y-m-d', $_POST['values'][$cpt]);
+				}else{
+					$dateTime = \DateTime::createFromFormat('d/m/Y', $_POST['values'][$cpt]);
+				}
+				
+				$_POST['values'][$cpt] = date_format($dateTime,"Y-m-d");
 			}
 			// Les champs indexés
 			if ($_POST['values'][$cpt] === 'select_value_null') {
@@ -50,7 +58,7 @@ if (isset ( $_POST ['formID'] ) && isset ( $_POST ['mode'] )) {
 		
 		echo $status;
 	} else {
-		throw new Exception ();
+		throw new \Exception ();
 	}
 }
 
