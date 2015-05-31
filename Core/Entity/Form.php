@@ -10,6 +10,7 @@ use Core\Exception\FieldAlreadyDefinedException;
 use Core\Exception\DriverNotSupportedException;
 use Core\Exception\EmptyFieldListException;
 use Core\Exception\FieldUnknownInDatabaseException;
+use Core\Exception\PluginPathException;
 
 /**
  * Classe principale du plugin "Formulaire".
@@ -72,7 +73,11 @@ class Form {
 		
 		$this->fieldList = new \ArrayObject();
 		
-		$this->pluginPath = $pluginPath;
+		if (!empty($pluginPath)) {
+			$this->pluginPath = $pluginPath;
+		}else{
+			throw new PluginPathException('__construct');
+		}
 	}
 	
 	/**
