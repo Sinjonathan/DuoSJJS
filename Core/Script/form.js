@@ -5,10 +5,6 @@ $(function() {
 		selectOtherMonths: true,
     });
 	
-	$('#request').click(function(){
-		validateForm();   
-	});
-	
 	function validateForm(){
 		
 		var mode = $('#request').val();

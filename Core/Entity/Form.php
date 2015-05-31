@@ -378,7 +378,7 @@ class Form {
 		
 		$html = '<div id="alert-success-insert" class="alert-success" style="display:none;">INSERTION REUSSI</div>';
 		$html .= '<div id="alert-success-update" class="alert-success" style="display:none;">UPDATE REUSSI</div>';
-		$html .= '<form id="'.$this->id.'" class="form-horizontal" method="post" action="">';
+		$html .= '<form id="'.$this->id.'" class="form-horizontal" method="post" action="" onsubmit="return validateForm()">';
 		foreach ($this->fieldList as $field)
 			$html .= $field->showField();
 		
