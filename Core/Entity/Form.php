@@ -11,8 +11,7 @@ use Core\Exception\DriverNotSupportedException;
 use Core\Exception\EmptyFieldListException;
 use Core\Exception\FieldUnknownInDatabaseException;
 use Core\Exception\PluginPathException;
-use Core\Exception\Core\Exception;
-use Core\Exception\Core\Exception;
+use Core\Exception\FieldStatesCompatibilityException;
 
 /**
  * The representation of a form
@@ -20,9 +19,6 @@ use Core\Exception\Core\Exception;
  * @author Jonathan SANTONI
  */
 class Form {
-
-	public static $FRANCAIS 		= "fr";
-	public static $ENGLISH 			= "en";
 	
 	// Default parameters
 	protected static $BDD_URL 		= "127.0.0.1";
@@ -240,14 +236,9 @@ class Form {
 		foreach ($this->fieldList as $field)
 			if ($field->name == $name)
 				return $field;
-		throw new FieldUnknownInDatabaseException($name);
+		//throw new FieldUnknownInDatabaseException($name);
+		return null;
 	}
-	
-	/**
-	 * Ajoute un champs au formulaire
-	 * @param $name		Nom du champs dans la base de données
-	 * @param $label	Libellé du champs
-	 */
 	
 	/**
 	 * Add a field in the form
@@ -426,8 +417,12 @@ class Form {
 			throw new EmptyFieldListException("show");
 		}
 		
-		$html = '<div id="alert-success-insert" class="alert-success" style="display:none;">INSERTION REUSSI</div>';
-		$html .= '<div id="alert-success-update" class="alert-success" style="display:none;">UPDATE REUSSI</div>';
+		$html = '<div id="alert-error" class="alert-failure" style="display:none;">Error : SQL constraints violation.</div>';
+		$html .= '<div id="alert-success-insert" class="alert-success" style="display:none;">1 line added in "'.$this->table.'".</div>';
+		$html .= '<div id="alert-failure-insert" class="alert-failure" style="display:none;">Error : Insert failure. Please check the database constraints.</div>';
+		$html .= '<div id="alert-success-update" class="alert-success" style="display:none;">1 line updated in "'.$this->table.'".</div>';
+		$html .= '<div id="alert-failure-update" class="alert-failure" style="display:none;">Error : Update failure. Please check the database constraints.</div>';
+
 		$html .= '<form id="'.$this->id.'" class="form-horizontal" method="post" action="" onsubmit="return validateForm()">';
 		foreach ($this->fieldList as $field)
 			$html .= $field->showField();
