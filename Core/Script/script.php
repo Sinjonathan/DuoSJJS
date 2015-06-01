@@ -58,7 +58,7 @@ if (isset ( $_POST ['formID'] ) && isset ( $_POST ['mode'] )) {
 		
 		echo $status;
 	} else {
-		throw new \Exception ();
+		throw new \Exception();
 	}
 }
 
