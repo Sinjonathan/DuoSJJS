@@ -1,8 +1,10 @@
 FormMakerPlugin
+@author Sebastien Joly
+@author Jonathan Santoni
 
 Presentation *************************
 
-	This plugin for PHP project exist for facilitated the creation of form based on database.
+	This plugin for PHP project exist for facilitated the creation of form based on database
 
 Installation *************************
 
@@ -10,6 +12,62 @@ Installation *************************
 	
 		~$ git clone https://github.com/Sinjonathan/FormMakerPlugin.git
 
-	...
+	Step 2 : When you need to make a form, add in the top of the file
+	
+		use Core\Entity\Form;
+		include 'CURRENT_LOCATION_TO_PLUGIN_PATH/FormMakerPlugin/start.php';
+		
+	Step 3 : In the header of the file add
+	
+		loadFormMakerPluginInfo("CURRENT_LOCATION_TO_PLUGIN_PATH/FormMakerPlugin");
 
-/!\ give write permission to /temp
+	Step 4 : Initialize form variable
+	
+		$form = new Form("CURRENT_LOCATION_TO_PLUGIN_PATH/FormMakerPlugin");
+		$form->init(host,databaseType,databaseName,databaseTable,user,password);
+	
+	Step 5 : Add yours fields, set options
+	
+		use $form->addField(...), $form->isUpdateForm(...), ...  
+	
+	Step 6 : Show the form
+	
+		$form->show();
+		
+Config example ***********************		
+	
+	In a project Test structured like this :
+	
+		Test/
+			- TestFolder/
+				- TestInFolder.php
+			- TestOutFolder.php
+			
+		
+	Import project
+		
+		Test/
+			- FormMakerPlugin
+			- TestFolder/
+				- TestInFolder.php
+			- TestOutFolder.php
+			
+	In TestInFolder.php
+	
+		include '../FormMakerPlugin/start.php';
+		
+		loadFormMakerPluginInfo("../FormMakerPlugin");
+
+		$form = new Form("../FormMakerPlugin");
+		
+	In TestOutFolder.php
+	
+		include './FormMakerPlugin/start.php';
+		
+		loadFormMakerPluginInfo("./FormMakerPlugin");
+
+		$form = new Form("./FormMakerPlugin");
+		
+Recommendation ***********************
+
+	Be sure the /temp folder have the write permission else the plugin don't work
