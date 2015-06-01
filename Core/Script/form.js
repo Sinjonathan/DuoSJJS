@@ -14,7 +14,6 @@ function validateForm(){
 	var param = [];
 	var values = [];
 	var cpt = 0;
-	//var status = false;
 
 	$('#'+formID+ ' .field' ).each(function() {
 		if (!($(this).attr('type') == 'radio' && !$(this).is(':checked'))) {
@@ -23,20 +22,25 @@ function validateForm(){
 			cpt++;
 		}
 	});
-	/*
-	$.ajax({
-		  type: 'POST',
-		  url: pluginPath + "/Core/Script/script.php",
-		  data: {'formID': formID, 'param': param, 'values': values, 'mode': mode},
-		  success: function() {if(data == 1){status = true}},
-		  async:false
-	});
-	*/
-	$.post(pluginPath + "/Core/Script/script.php", {'formID': formID, 'param': param, 'values': values, 'mode': mode}, function(data) {alert(data);},"text");
-	/*
-	if(status && mode == 'insert') {
-     	$('#alert-success-insert').show();
-   	}*/
+
+	$.post(pluginPath + "/Core/Script/script.php", {'formID': formID, 'param': param, 'values': values, 'mode': mode}, function(data) {
+		if (data === "1") {
+			if (mode === "insert") {
+				$('#alert-success-insert').css("display", "block").delay(500).fadeIn(200);
+			}else if (mode == "update") {
+				$('#alert-success-update').css("display", "block").delay(500).fadeIn(200);
+			}
+		}else if (data === "0") {
+			if (mode === "insert") {
+				$('#alert-failure-insert').css("display", "block").delay(500).fadeIn(200);
+			}else if (mode == "update") {
+				$('#alert-failure-update').css("display", "block").delay(500).fadeIn(200);
+			}
+		}else if (data === "-1") {
+			$('#alert-error').css("display", "block").delay(500).fadeIn(200);
+		}
+		alert(data);
+	},"text");
 }
 
 (function(factory) {
