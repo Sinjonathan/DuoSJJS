@@ -1,1 +1,15 @@
+FormMakerPlugin
+
+Presentation *************************
+
+	This plugin for PHP project exist for facilitated the creation of form based on database.
+
+Installation *************************
+
+	Step 1 : Import plugin in yours project with this command line
+	
+		~$ git clone https://github.com/Sinjonathan/FormMakerPlugin.git
+
+	...
+
 /!\ give write permission to /temp
